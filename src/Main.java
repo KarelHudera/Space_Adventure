@@ -6,7 +6,6 @@ public class Main {
 
     private static boolean gameFinished;
 
-
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -15,17 +14,19 @@ public class Main {
     }
 
     private static void initializeGame(Scanner scanner) {
-        currentRoom = "room1";
+        currentRoom = Rooms.LABORATORY.getRoom().getName();
         gameFinished = false;
         rooms = new HashMap<>();
-        rooms.put("room1", new Room("lmoa ngmi"));
-        rooms.put("room2", new Room("paris people"));
+        rooms.put(Rooms.LAUNCH_PAD.getRoom().getName(), Rooms.LAUNCH_PAD.getRoom());
+        rooms.put(Rooms.WHITE_ROOM.getRoom().getName(), Rooms.WHITE_ROOM.getRoom());
+        rooms.put(Rooms.SERVER_ROOM.getRoom().getName(), Rooms.SERVER_ROOM.getRoom());
+        rooms.put(Rooms.LABORATORY.getRoom().getName(), Rooms.LABORATORY.getRoom());
+        rooms.put(Rooms.TECHNICAL_FACILITY.getRoom().getName(), Rooms.TECHNICAL_FACILITY.getRoom());
+        rooms.put(Rooms.CONTROL_CENTER.getRoom().getName(), Rooms.CONTROL_CENTER.getRoom());
+        rooms.put(Rooms.STORAGE_FACILITY.getRoom().getName(), Rooms.STORAGE_FACILITY.getRoom());
 
-        // =====
-        System.out.println("Welcome to the SpaceAdventure!");
-
+        System.out.println(Strings.ASCII_GREETING);
         System.out.println(Strings.ASCII_ART);
-
         System.out.println("Type 'goTo ROOMNAME' to move to a different room.");
         System.out.println("Type 'whereAmI' to check your current location.");
         System.out.println("Type 'exit' to end the game.");
@@ -46,7 +47,7 @@ public class Main {
                 break;
             }
 
-            processCommand(command);
+            handleCommand(command);
         }
 
         endGame();
@@ -69,7 +70,7 @@ public class Main {
     }
 
 
-    private static void processCommand(String command) {
+    private static void handleCommand(String command) {
         String[] parts = command.split(" ");
         String commandAction = parts[0];
 
@@ -94,6 +95,9 @@ public class Main {
                 case whereAmI:
                     whereAmI();
                     break;
+                case  showMap:
+                    System.out.println(Strings.ASCII_MAP);
+                    break;
                 default:
                     System.out.println(Strings.ERROR_COMMAND_MESSAGE);
             }
@@ -104,8 +108,12 @@ public class Main {
 
     private static void goToRoom(String roomName) {
         if (rooms.containsKey(roomName)) {
-            currentRoom = roomName;
-            System.out.println("You have entered the " + roomName + ".");
+            if (!roomName.equals(currentRoom)) {
+                currentRoom = roomName;
+                System.out.println("You have entered the " + roomName + ".");
+            } else {
+                System.out.println("You are already in " + roomName + ".");
+            }
         } else {
             System.out.println("Invalid room name. Try again.");
         }

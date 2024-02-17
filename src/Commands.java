@@ -1,7 +1,9 @@
 public enum Commands {
     goTo("goTo"),
     whereAmI("whereAmI"),
-    exit("exit");
+    exit("exit"),
+
+    showMap("showMap");
 
     private final String description;
 
