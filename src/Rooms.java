@@ -5,8 +5,8 @@ public enum Rooms {
     WHITE_ROOM("white_room", "You are in a white room.", List.of()),
     SERVER_ROOM("server_room", "You are in server room.", List.of("rocket computer")),
     LABORATORY("laboratory", "You are in a laboratory.", List.of("barrel with rocket fuel")),
-    TECHNICAL_FACILITY("technical_facility", "You are in a technical facility", List.of("barrel with rocket fuel", "canyster")),
-    CONTROL_CENTER("control_center", "You are at the control center.", List.of()),
+    TECHNICAL_FACILITY("technical_facility", "You are in a technical facility", List.of("barrel with rocket fuel", "canister")),
+    CONTROL_CENTER("control_center", "You are at the control center.", List.of("entry card")),
     STORAGE_FACILITY("storage_facility", "You are in a storage facility", List.of("barrel with rocket fuel"));
 
     private final Room room;
@@ -19,4 +19,3 @@ public enum Rooms {
         return room;
     }
 }
-

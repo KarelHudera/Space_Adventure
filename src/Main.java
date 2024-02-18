@@ -3,7 +3,6 @@ import java.util.*;
 public class Main {
     private static String currentRoom;
     private static HashMap<String, Room> rooms;
-
     private static boolean gameFinished;
 
     public static void main(String[] args) {
@@ -25,12 +24,13 @@ public class Main {
         rooms.put(Rooms.CONTROL_CENTER.getRoom().getName(), Rooms.CONTROL_CENTER.getRoom());
         rooms.put(Rooms.STORAGE_FACILITY.getRoom().getName(), Rooms.STORAGE_FACILITY.getRoom());
 
-        System.out.println(Strings.ASCII_GREETING);
+        System.out.println(Strings.WELCOME_MESSAGE);
         System.out.println(Strings.ASCII_ART);
         System.out.println("Type 'goTo ROOMNAME' to move to a different room.");
-        System.out.println("Type 'whereAmI' to check your current location.");
-        System.out.println("Type 'exit' to end the game.");
-        System.out.print("Press Enter to start the adventure...");
+        System.out.println(Strings.WHERE_AM_I_MESSAGE);
+        System.out.println("Type 'showMap' to display game map");
+        System.out.println(Strings.EXIT_MESSAGE);
+        System.out.print(Strings.PRESS_ENTER_MESSAGE);
         scanner.nextLine();
 
         clearConsole();
@@ -92,12 +92,19 @@ public class Main {
                         System.out.println(Strings.ERROR_COMMAND_MESSAGE);
                     }
                     break;
+
                 case whereAmI:
                     whereAmI();
                     break;
-                case  showMap:
+
+                case showMap:
                     System.out.println(Strings.ASCII_MAP);
                     break;
+
+                case search:
+                    System.out.println(currentRoom + ": " + rooms.get(currentRoom).getItems());
+                    break;
+
                 default:
                     System.out.println(Strings.ERROR_COMMAND_MESSAGE);
             }
@@ -121,10 +128,11 @@ public class Main {
 
     private static void whereAmI() {
         System.out.println(rooms.get(currentRoom).getDescription());
-        //gameFinished = true;
+        gameFinished = true;
     }
 
     private static void endGame() {
-        System.out.println("Thank you for playing! Game Over.");
+        clearConsole();
+        System.out.println(Strings.END_GAME_MESSAGE);
     }
 }

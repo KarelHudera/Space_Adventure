@@ -8,9 +8,8 @@ class Room {
     public Room(String name, String description, List<String> items) {
         this.name = name;
         this.description = description;
-        this.items = new ArrayList<>();
+        this.items = items;
     }
-
 
     public String getDescription() {
         return description;

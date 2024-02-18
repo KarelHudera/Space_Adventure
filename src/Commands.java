@@ -2,8 +2,8 @@ public enum Commands {
     goTo("goTo"),
     whereAmI("whereAmI"),
     exit("exit"),
-
-    showMap("showMap");
+    showMap("showMap"),
+    search("search");
 
     private final String description;
 
