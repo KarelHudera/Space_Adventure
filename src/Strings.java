@@ -85,8 +85,15 @@ public class Strings {
                     ██║░░░░░███████╗██║░░██║░░░██║░░░██║██║░╚███║╚██████╔╝██╗
                     ╚═╝░░░░░╚══════╝╚═╝░░╚═╝░░░╚═╝░░░╚═╝╚═╝░░╚══╝░╚═════╝░╚═╝
                     """;
-    public static final String WHERE_AM_I_MESSAGE = "Type 'whereAmI' to check your current location.";
-    public static final String EXIT_MESSAGE = "Type 'exit' to end the game.";
-    public static final String PRESS_ENTER_MESSAGE = "Press Enter to start the adventure...";
+    public static final String HELP_MESAGE =
+            """
+                    Type 'help' to show this message.
+                    Type 'goTo ROOMNAME' to move to a different room.
+                    Type 'whereAmI' to check your current location.
+                    Type 'showMap' to display game map
+                    Type 'search' to show items in current room
+                    Type 'exit' to end the game.
+                    Press Enter to start the adventure...
+                    """;
     public static final String ERROR_COMMAND_MESSAGE = "\uD83D\uDD34\uD83D\uDD34\uD83D\uDD34 Invalid command.";
 }

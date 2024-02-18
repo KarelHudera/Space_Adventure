@@ -26,11 +26,7 @@ public class Main {
 
         System.out.println(Strings.WELCOME_MESSAGE);
         System.out.println(Strings.ASCII_ART);
-        System.out.println("Type 'goTo ROOMNAME' to move to a different room.");
-        System.out.println(Strings.WHERE_AM_I_MESSAGE);
-        System.out.println("Type 'showMap' to display game map");
-        System.out.println(Strings.EXIT_MESSAGE);
-        System.out.print(Strings.PRESS_ENTER_MESSAGE);
+        System.out.println(Strings.HELP_MESAGE);
         scanner.nextLine();
 
         clearConsole();
@@ -84,6 +80,10 @@ public class Main {
 
         if (enteredCommand != null) {
             switch (enteredCommand) {
+                case help:
+                    System.out.println(Strings.HELP_MESAGE);
+                    break;
+
                 case goTo:
                     if (parts.length > 1) {
                         String roomName = parts[1];
@@ -94,7 +94,7 @@ public class Main {
                     break;
 
                 case whereAmI:
-                    whereAmI();
+                    System.out.println(rooms.get(currentRoom).getDescription());
                     break;
 
                 case showMap:
@@ -124,11 +124,6 @@ public class Main {
         } else {
             System.out.println("Invalid room name. Try again.");
         }
-    }
-
-    private static void whereAmI() {
-        System.out.println(rooms.get(currentRoom).getDescription());
-        gameFinished = true;
     }
 
     private static void endGame() {

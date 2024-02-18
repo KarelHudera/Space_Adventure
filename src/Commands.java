@@ -1,9 +1,11 @@
 public enum Commands {
+    help("help"),
     goTo("goTo"),
     whereAmI("whereAmI"),
     exit("exit"),
     showMap("showMap"),
     search("search");
+
 
     private final String description;
 
