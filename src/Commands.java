@@ -3,9 +3,11 @@ public enum Commands {
     goTo("goTo"),
     whereAmI("whereAmI"),
     exit("exit"),
-    showMap("showMap"),
-    search("search");
-
+    map("map"),
+    search("search"),
+    pick("pick"),
+    inventory("inventory"),
+    startRocket("startRocket");
 
     private final String description;
 

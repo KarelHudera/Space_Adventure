@@ -3,7 +3,10 @@ import java.util.*;
 public class Main {
     private static String currentRoom;
     private static HashMap<String, Room> rooms;
-    private static boolean gameFinished;
+    private static boolean gamePlay;
+    private static List<String> inventory;
+    private static final Integer inventorySize = 3;
+
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -14,7 +17,8 @@ public class Main {
 
     private static void initializeGame(Scanner scanner) {
         currentRoom = Rooms.LABORATORY.getRoom().getName();
-        gameFinished = false;
+        inventory = new ArrayList<>(inventorySize);
+        gamePlay = true;
         rooms = new HashMap<>();
         rooms.put(Rooms.LAUNCH_PAD.getRoom().getName(), Rooms.LAUNCH_PAD.getRoom());
         rooms.put(Rooms.WHITE_ROOM.getRoom().getName(), Rooms.WHITE_ROOM.getRoom());
@@ -23,6 +27,7 @@ public class Main {
         rooms.put(Rooms.TECHNICAL_FACILITY.getRoom().getName(), Rooms.TECHNICAL_FACILITY.getRoom());
         rooms.put(Rooms.CONTROL_CENTER.getRoom().getName(), Rooms.CONTROL_CENTER.getRoom());
         rooms.put(Rooms.STORAGE_FACILITY.getRoom().getName(), Rooms.STORAGE_FACILITY.getRoom());
+
 
         System.out.println(Strings.WELCOME_MESSAGE);
         System.out.println(Strings.ASCII_ART);
@@ -34,7 +39,7 @@ public class Main {
 
     private static void playGame(Scanner scanner) {
 
-        while (!gameFinished) {
+        while (gamePlay) {
             System.out.print("Enter a command: ");
             String command = scanner.nextLine();
 
@@ -97,12 +102,29 @@ public class Main {
                     System.out.println(rooms.get(currentRoom).getDescription());
                     break;
 
-                case showMap:
+                case map:
                     System.out.println(Strings.ASCII_MAP);
                     break;
 
                 case search:
                     System.out.println(currentRoom + ": " + rooms.get(currentRoom).getItems());
+                    break;
+
+                case pick:
+                    if (parts.length > 1) {
+                        String item = parts[1];
+                        pickItem(item);
+                    } else {
+                        System.out.println(Strings.ERROR_COMMAND_MESSAGE);
+                    }
+                    break;
+
+                case inventory:
+                    System.out.println(inventory);
+                    break;
+
+                case startRocket:
+                    // TODO("end game")
                     break;
 
                 default:
@@ -123,6 +145,21 @@ public class Main {
             }
         } else {
             System.out.println("Invalid room name. Try again.");
+        }
+    }
+
+    private static void pickItem(String item) {
+        Room currentRoom = rooms.get(Main.currentRoom);
+        if (currentRoom.getItems().contains(item)) {
+            if (inventory.size() < inventorySize) {
+                inventory.add(item);
+                currentRoom.removeItem(item);
+                System.out.println("Picked up " + item + ".");
+            } else {
+                System.out.println("Inventory is full. Drop an item to pick up " + item + ".");
+            }
+        } else {
+            System.out.println("Item not found in the room.");
         }
     }
 
