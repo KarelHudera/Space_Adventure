@@ -5,7 +5,7 @@ School project 🏫
 
 ## Run project
 ```
-git clone https://github.com/KarelHudera/Space_Adventure.gi`
+git clone https://github.com/KarelHudera/Space_Adventure.git
 cd Space_Adventure/src
 javac Main.java
 java Main
@@ -14,6 +14,10 @@ java Main
 ## Game play
 
 ### Story
+Lost in a mysterious rocket facility, your mission is clear: Escape the unknown planet.
+Navigate through rooms, gather essential items, and launch the rocket.
+Unravel the secrets of the facility and embark on a thrilling journey to escape the enigmatic world.
+Good luck!
 
 ### Map
 ``` 
@@ -45,7 +49,6 @@ Type 'pick ITEM' to put item to your inventory
 Type 'inventory' to show your inventory
 Type 'startRocket' to win the game
 Type 'exit' to end the game.
-Press Enter to start the adventure...
 ```
 
 ## License

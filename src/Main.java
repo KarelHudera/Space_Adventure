@@ -31,6 +31,7 @@ public class Main {
 
         System.out.println(Strings.WELCOME_MESSAGE);
         System.out.println(Strings.ASCII_ART);
+        System.out.println(Strings.INTRO_MESSAGE);
         System.out.println(Strings.HELP_MESAGE);
         scanner.nextLine();
 
