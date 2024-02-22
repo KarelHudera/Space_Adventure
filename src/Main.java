@@ -16,17 +16,17 @@ public class Main {
     }
 
     private static void initializeGame(Scanner scanner) {
-        currentRoom = Rooms.LABORATORY.getRoom().getName();
+        currentRoom = Rooms.LABORATORY.getRoom().name();
         inventory = new ArrayList<>(inventorySize);
         gamePlay = true;
         rooms = new HashMap<>();
-        rooms.put(Rooms.LAUNCH_PAD.getRoom().getName(), Rooms.LAUNCH_PAD.getRoom());
-        rooms.put(Rooms.WHITE_ROOM.getRoom().getName(), Rooms.WHITE_ROOM.getRoom());
-        rooms.put(Rooms.SERVER_ROOM.getRoom().getName(), Rooms.SERVER_ROOM.getRoom());
-        rooms.put(Rooms.LABORATORY.getRoom().getName(), Rooms.LABORATORY.getRoom());
-        rooms.put(Rooms.TECHNICAL_FACILITY.getRoom().getName(), Rooms.TECHNICAL_FACILITY.getRoom());
-        rooms.put(Rooms.CONTROL_CENTER.getRoom().getName(), Rooms.CONTROL_CENTER.getRoom());
-        rooms.put(Rooms.STORAGE_FACILITY.getRoom().getName(), Rooms.STORAGE_FACILITY.getRoom());
+        rooms.put(Rooms.LAUNCH_PAD.getRoom().name(), Rooms.LAUNCH_PAD.getRoom());
+        rooms.put(Rooms.WHITE_ROOM.getRoom().name(), Rooms.WHITE_ROOM.getRoom());
+        rooms.put(Rooms.SERVER_ROOM.getRoom().name(), Rooms.SERVER_ROOM.getRoom());
+        rooms.put(Rooms.LABORATORY.getRoom().name(), Rooms.LABORATORY.getRoom());
+        rooms.put(Rooms.TECHNICAL_FACILITY.getRoom().name(), Rooms.TECHNICAL_FACILITY.getRoom());
+        rooms.put(Rooms.CONTROL_CENTER.getRoom().name(), Rooms.CONTROL_CENTER.getRoom());
+        rooms.put(Rooms.STORAGE_FACILITY.getRoom().name(), Rooms.STORAGE_FACILITY.getRoom());
 
 
         System.out.println(Strings.WELCOME_MESSAGE);
@@ -99,7 +99,7 @@ public class Main {
                     break;
 
                 case whereAmI:
-                    System.out.println(rooms.get(currentRoom).getDescription());
+                    System.out.println(rooms.get(currentRoom).description());
                     break;
 
                 case map:
@@ -107,7 +107,7 @@ public class Main {
                     break;
 
                 case search:
-                    System.out.println(currentRoom + ": " + rooms.get(currentRoom).getItems());
+                    System.out.println(currentRoom + ": " + rooms.get(currentRoom).items());
                     break;
 
                 case pick:
@@ -150,7 +150,7 @@ public class Main {
 
     private static void pickItem(String item) {
         Room currentRoom = rooms.get(Main.currentRoom);
-        if (currentRoom.getItems().contains(item)) {
+        if (currentRoom.items().contains(item)) {
             if (inventory.size() < inventorySize) {
                 inventory.add(item);
                 currentRoom.removeItem(item);

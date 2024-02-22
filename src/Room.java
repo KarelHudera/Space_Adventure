@@ -1,10 +1,6 @@
 import java.util.*;
 
-public class Room {
-    private final String name;
-    private final String description;
-    private final List<String> items;
-
+public record Room(String name, String description, List<String> items) {
     public Room(String name, String description, List<String> items) {
         this.name = name;
         this.description = description;
@@ -19,15 +15,8 @@ public class Room {
         items.remove(item);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public List<String> getItems() {
+    @Override
+    public List<String> items() {
         return new ArrayList<>(items);
     }
 }
