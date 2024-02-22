@@ -92,6 +92,9 @@ public class Strings {
                     Type 'whereAmI' to check your current location.
                     Type 'showMap' to display game map
                     Type 'search' to show items in current room
+                    Type 'pick ITEM' to put item to your inventory
+                    Type 'inventory' to show your inventory
+                    Type 'startRocket' to win the game
                     Type 'exit' to end the game.
                     Press Enter to start the adventure...
                     """;
