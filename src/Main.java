@@ -124,8 +124,32 @@ public class Main {
                     System.out.println(inventory);
                     break;
 
+                case sudoWin:
+                    gamePlay = false;
+
                 case startRocket:
-                    // TODO("end game")
+                    if (Objects.equals(currentRoom, Rooms.LAUNCH_PAD.getRoom().name())) {
+                        List<String> itemsToCheck = Arrays.asList("rocket_computer", "canister_with_fuel");
+
+                        boolean allItemsPresent = true;
+                        String missingItem = "";
+                        for (String item : itemsToCheck) {
+                            if (!inventory.contains(item)) {
+                                missingItem = item;
+                                allItemsPresent = false;
+                                break;
+                            }
+                        }
+
+                        if (allItemsPresent) {
+                            gamePlay = false;
+                        } else {
+                            System.out.println("You are missing " + missingItem + "!");
+                        }
+                    } else {
+                        System.out.println("Go to launch pad fist!");
+                    }
+
                     break;
 
                 default:
