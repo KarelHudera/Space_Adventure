@@ -4,7 +4,6 @@ public class Main {
     private static String currentRoom;
     private static HashMap<String, Room> rooms;
     private static boolean gamePlay;
-    private static List<String> inventory;
     private static final Integer inventorySize = 3;
 
 
@@ -16,9 +15,13 @@ public class Main {
     }
 
     private static void initializeGame(Scanner scanner) {
-        currentRoom = Rooms.LABORATORY.getRoom().name();
-        inventory = new ArrayList<>(inventorySize);
         gamePlay = true;
+
+        currentRoom = Rooms.LABORATORY.getRoom().name();
+        List<String> initialInventory = new ArrayList<>();
+        Player.setInventory(initialInventory);
+        Player.setInventorySize(inventorySize);
+
         rooms = new HashMap<>();
         rooms.put(Rooms.LAUNCH_PAD.getRoom().name(), Rooms.LAUNCH_PAD.getRoom());
         rooms.put(Rooms.WHITE_ROOM.getRoom().name(), Rooms.WHITE_ROOM.getRoom());
@@ -120,8 +123,17 @@ public class Main {
                     }
                     break;
 
+                case drop:
+                    if (parts.length > 1) {
+                        String item = parts[1];
+                        dropItem(item);
+                    } else {
+                        System.out.println(Strings.ERROR_COMMAND_MESSAGE);
+                    }
+                    break;
+
                 case inventory:
-                    System.out.println(inventory);
+                    System.out.println(Player.getInventory());
                     break;
 
                 case sudoWin:
@@ -134,7 +146,7 @@ public class Main {
                         boolean allItemsPresent = true;
                         String missingItem = "";
                         for (String item : itemsToCheck) {
-                            if (!inventory.contains(item)) {
+                            if (!Player.getInventory().contains(item)) {
                                 missingItem = item;
                                 allItemsPresent = false;
                                 break;
@@ -176,8 +188,8 @@ public class Main {
     private static void pickItem(String item) {
         Room currentRoom = rooms.get(Main.currentRoom);
         if (currentRoom.items().contains(item)) {
-            if (inventory.size() < inventorySize) {
-                inventory.add(item);
+            if (Player.getInventory().size() < inventorySize) {
+                Player.getInventory().add(item);
                 currentRoom.removeItem(item);
                 System.out.println("Picked up " + item + ".");
             } else {
@@ -185,6 +197,17 @@ public class Main {
             }
         } else {
             System.out.println("Item not found in the room.");
+        }
+    }
+
+    private static void dropItem(String item) {
+        Room currentRoom = rooms.get(Main.currentRoom);
+        if (Player.getInventory().contains(item)) {
+            Player.getInventory().remove(item);
+            currentRoom.addItem(item);
+            System.out.println(item + " is dropped in to: " + currentRoom.name());
+        } else {
+            System.out.println("Item not found in the inventory.");
         }
     }
 
