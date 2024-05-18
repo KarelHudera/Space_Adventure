@@ -9,5 +9,5 @@ public enum Commands {
     drop,
     inventory,
     sudoWin,
-    startRocket;
+    startRocket
 }
