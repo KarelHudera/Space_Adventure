@@ -6,7 +6,8 @@ public enum Commands {
     map,
     search,
     pick,
+    drop,
     inventory,
     sudoWin,
-    startRocket;
+    startRocket
 }

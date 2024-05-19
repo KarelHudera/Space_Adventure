@@ -1,13 +1,19 @@
 import java.util.*;
 
+/**
+ * The Main class initializes and manages the game state for a text-based adventure game.
+ */
 public class Main {
     private static String currentRoom;
     private static HashMap<String, Room> rooms;
     private static boolean gamePlay;
-    private static List<String> inventory;
     private static final Integer inventorySize = 3;
 
-
+    /**
+     * Main method to start the game.
+     *
+     * @param args Command-line arguments (not used).
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
@@ -15,47 +21,63 @@ public class Main {
         playGame(scanner);
     }
 
+    /**
+     * Initializes the game state, including rooms, player inventory, and game settings.
+     *
+     * @param scanner Scanner object to read user input.
+     */
     private static void initializeGame(Scanner scanner) {
-        currentRoom = Rooms.LABORATORY.getRoom().name();
-        inventory = new ArrayList<>(inventorySize);
         gamePlay = true;
+
+        currentRoom = Rooms.LABORATORY.name();
+        List<String> initialInventory = new ArrayList<>();
+        Player.setInventory(initialInventory);
+        Player.setInventorySize(inventorySize);
+
         rooms = new HashMap<>();
-        rooms.put(Rooms.LAUNCH_PAD.getRoom().name(), Rooms.LAUNCH_PAD.getRoom());
-        rooms.put(Rooms.WHITE_ROOM.getRoom().name(), Rooms.WHITE_ROOM.getRoom());
-        rooms.put(Rooms.SERVER_ROOM.getRoom().name(), Rooms.SERVER_ROOM.getRoom());
-        rooms.put(Rooms.LABORATORY.getRoom().name(), Rooms.LABORATORY.getRoom());
-        rooms.put(Rooms.TECHNICAL_FACILITY.getRoom().name(), Rooms.TECHNICAL_FACILITY.getRoom());
-        rooms.put(Rooms.CONTROL_CENTER.getRoom().name(), Rooms.CONTROL_CENTER.getRoom());
-        rooms.put(Rooms.STORAGE_FACILITY.getRoom().name(), Rooms.STORAGE_FACILITY.getRoom());
+        rooms.put(Rooms.LAUNCH_PAD.name(), Rooms.LAUNCH_PAD.getRoom());
+        rooms.put(Rooms.WHITE_ROOM.name(), Rooms.WHITE_ROOM.getRoom());
+        rooms.put(Rooms.SERVER_ROOM.name(), Rooms.SERVER_ROOM.getRoom());
+        rooms.put(Rooms.LABORATORY.name(), Rooms.LABORATORY.getRoom());
+        rooms.put(Rooms.TECHNICAL_FACILITY.name(), Rooms.TECHNICAL_FACILITY.getRoom());
+        rooms.put(Rooms.CONTROL_CENTER.name(), Rooms.CONTROL_CENTER.getRoom());
+        rooms.put(Rooms.STORAGE_FACILITY.name(), Rooms.STORAGE_FACILITY.getRoom());
 
-
-        System.out.println(Strings.WELCOME_MESSAGE);
-        System.out.println(Strings.ASCII_ART);
-        System.out.println(Strings.INTRO_MESSAGE);
-        System.out.println(Strings.HELP_MESAGE);
+        System.out.print(Strings.WELCOME_MESSAGE);
+        System.out.print(Strings.ASCII_ART);
+        System.out.print(Strings.INTRO_MESSAGE);
+        System.out.print(Strings.HELP_MESAGE);
         scanner.nextLine();
 
         clearConsole();
     }
 
+    /**
+     * Manages the game loop where commands are processed until the game ends.
+     *
+     * @param scanner Scanner object to read user input.
+     */
     private static void playGame(Scanner scanner) {
-
         while (gamePlay) {
+            System.out.println("");
             System.out.print("Enter a command: ");
             String command = scanner.nextLine();
 
             if (command.equals(Commands.exit.toString())) {
-                System.out.println("Exiting the game. Goodbye!");
+                System.out.print("Exiting the game. Goodbye!");
                 break;
             }
 
-            handleCommand(command);
+            Logic.handleCommand(command);
         }
 
         endGame();
         scanner.close();
     }
 
+    /**
+     * Clears the console screen based on the operating system.
+     */
     private static void clearConsole() {
         try {
             final String os = System.getProperty("os.name");
@@ -67,129 +89,69 @@ public class Main {
                 System.out.flush();
             }
         } catch (final Exception e) {
-            System.out.println("Failed to clear the console: " + e.getMessage());
+            System.out.print("Failed to clear the console: " + e.getMessage());
         }
     }
 
-
-    private static void handleCommand(String command) {
-        String[] parts = command.split(" ");
-        String commandAction = parts[0];
-
-        Commands enteredCommand = null;
-        for (Commands cmd : Commands.values()) {
-            if (cmd.toString().equalsIgnoreCase(commandAction)) {
-                enteredCommand = cmd;
-                break;
-            }
-        }
-
-        if (enteredCommand != null) {
-            switch (enteredCommand) {
-                case help:
-                    System.out.println(Strings.HELP_MESAGE);
-                    break;
-
-                case goTo:
-                    if (parts.length > 1) {
-                        String roomName = parts[1];
-                        goToRoom(roomName);
-                    } else {
-                        System.out.println(Strings.ERROR_COMMAND_MESSAGE);
-                    }
-                    break;
-
-                case whereAmI:
-                    System.out.println(rooms.get(currentRoom).description());
-                    break;
-
-                case map:
-                    System.out.println(Strings.ASCII_MAP);
-                    break;
-
-                case search:
-                    System.out.println(currentRoom + ": " + rooms.get(currentRoom).items());
-                    break;
-
-                case pick:
-                    if (parts.length > 1) {
-                        String item = parts[1];
-                        pickItem(item);
-                    } else {
-                        System.out.println(Strings.ERROR_COMMAND_MESSAGE);
-                    }
-                    break;
-
-                case inventory:
-                    System.out.println(inventory);
-                    break;
-
-                case sudoWin:
-                    gamePlay = false;
-
-                case startRocket:
-                    if (Objects.equals(currentRoom, Rooms.LAUNCH_PAD.getRoom().name())) {
-                        List<String> itemsToCheck = Arrays.asList("rocket_computer", "canister_with_fuel");
-
-                        boolean allItemsPresent = true;
-                        String missingItem = "";
-                        for (String item : itemsToCheck) {
-                            if (!inventory.contains(item)) {
-                                missingItem = item;
-                                allItemsPresent = false;
-                                break;
-                            }
-                        }
-
-                        if (allItemsPresent) {
-                            gamePlay = false;
-                        } else {
-                            System.out.println("You are missing " + missingItem + "!");
-                        }
-                    } else {
-                        System.out.println("Go to launch pad fist!");
-                    }
-
-                    break;
-
-                default:
-                    System.out.println(Strings.ERROR_COMMAND_MESSAGE);
-            }
-        } else {
-            System.out.println(Strings.ERROR_COMMAND_MESSAGE);
-        }
-    }
-
-    private static void goToRoom(String roomName) {
-        if (rooms.containsKey(roomName)) {
-            if (!roomName.equals(currentRoom)) {
-                currentRoom = roomName;
-                System.out.println("You have entered the " + roomName + ".");
-            } else {
-                System.out.println("You are already in " + roomName + ".");
-            }
-        } else {
-            System.out.println("Invalid room name. Try again.");
-        }
-    }
-
-    private static void pickItem(String item) {
-        Room currentRoom = rooms.get(Main.currentRoom);
-        if (currentRoom.items().contains(item)) {
-            if (inventory.size() < inventorySize) {
-                inventory.add(item);
-                currentRoom.removeItem(item);
-                System.out.println("Picked up " + item + ".");
-            } else {
-                System.out.println("Inventory is full. Drop an item to pick up " + item + ".");
-            }
-        } else {
-            System.out.println("Item not found in the room.");
-        }
-    }
-
+    /**
+     * Ends the game session by clearing the console and displaying end game message.
+     */
     private static void endGame() {
         clearConsole();
-        System.out.println(Strings.END_GAME_MESSAGE);
+        System.out.print(Strings.END_GAME_MESSAGE);
+    }
+
+    /**
+     * Retrieves the current room name where the player is located.
+     *
+     * @return The name of the current room.
+     */
+    public static String getCurrentRoom() {
+        return currentRoom;
+    }
+
+    /**
+     * Sets the current room where the player is located.
+     *
+     * @param currentRoom The name of the room to set as current.
+     */
+    public static void setCurrentRoom(String currentRoom) {
+        Main.currentRoom = currentRoom;
+    }
+
+    /**
+     * Retrieves the map of all rooms in the game.
+     *
+     * @return A HashMap containing room names mapped to Room objects.
+     */
+    public static HashMap<String, Room> getRooms() {
+        return rooms;
+    }
+
+    /**
+     * Sets the map of rooms in the game.
+     *
+     * @param rooms A HashMap containing room names mapped to Room objects.
+     */
+    public static void setRooms(HashMap<String, Room> rooms) {
+        Main.rooms = rooms;
+    }
+
+    /**
+     * Sets the state of the game (whether it is ongoing or ended).
+     *
+     * @param gamePlay True if the game is ongoing, false if ended.
+     */
+    public static void setGamePlay(boolean gamePlay) {
+        Main.gamePlay = gamePlay;
+    }
+
+    /**
+     * Checks if the game is currently ongoing.
+     *
+     * @return True if the game is ongoing, false if ended.
+     */
+    public static boolean isGamePlay() {
+        return gamePlay;
     }
 }
