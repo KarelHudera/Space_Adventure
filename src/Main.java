@@ -16,25 +16,25 @@ public class Main {
     private static void initializeGame(Scanner scanner) {
         gamePlay = true;
 
-        currentRoom = Rooms.LABORATORY.getRoom().name();
+        currentRoom = Rooms.LABORATORY.name();
         List<String> initialInventory = new ArrayList<>();
         Player.setInventory(initialInventory);
         Player.setInventorySize(inventorySize);
 
         rooms = new HashMap<>();
-        rooms.put(Rooms.LAUNCH_PAD.getRoom().name(), Rooms.LAUNCH_PAD.getRoom());
-        rooms.put(Rooms.WHITE_ROOM.getRoom().name(), Rooms.WHITE_ROOM.getRoom());
-        rooms.put(Rooms.SERVER_ROOM.getRoom().name(), Rooms.SERVER_ROOM.getRoom());
-        rooms.put(Rooms.LABORATORY.getRoom().name(), Rooms.LABORATORY.getRoom());
-        rooms.put(Rooms.TECHNICAL_FACILITY.getRoom().name(), Rooms.TECHNICAL_FACILITY.getRoom());
-        rooms.put(Rooms.CONTROL_CENTER.getRoom().name(), Rooms.CONTROL_CENTER.getRoom());
-        rooms.put(Rooms.STORAGE_FACILITY.getRoom().name(), Rooms.STORAGE_FACILITY.getRoom());
+        rooms.put(Rooms.LAUNCH_PAD.name(), Rooms.LAUNCH_PAD.getRoom());
+        rooms.put(Rooms.WHITE_ROOM.name(), Rooms.WHITE_ROOM.getRoom());
+        rooms.put(Rooms.SERVER_ROOM.name(), Rooms.SERVER_ROOM.getRoom());
+        rooms.put(Rooms.LABORATORY.name(), Rooms.LABORATORY.getRoom());
+        rooms.put(Rooms.TECHNICAL_FACILITY.name(), Rooms.TECHNICAL_FACILITY.getRoom());
+        rooms.put(Rooms.CONTROL_CENTER.name(), Rooms.CONTROL_CENTER.getRoom());
+        rooms.put(Rooms.STORAGE_FACILITY.name(), Rooms.STORAGE_FACILITY.getRoom());
 
 
-        System.out.println(Strings.WELCOME_MESSAGE);
-        System.out.println(Strings.ASCII_ART);
-        System.out.println(Strings.INTRO_MESSAGE);
-        System.out.println(Strings.HELP_MESAGE);
+        System.out.print(Strings.WELCOME_MESSAGE);
+        System.out.print(Strings.ASCII_ART);
+        System.out.print(Strings.INTRO_MESSAGE);
+        System.out.print(Strings.HELP_MESAGE);
         scanner.nextLine();
 
         clearConsole();
@@ -43,11 +43,12 @@ public class Main {
     private static void playGame(Scanner scanner) {
 
         while (gamePlay) {
+            System.out.println("");
             System.out.print("Enter a command: ");
             String command = scanner.nextLine();
 
             if (command.equals(Commands.exit.toString())) {
-                System.out.println("Exiting the game. Goodbye!");
+                System.out.print("Exiting the game. Goodbye!");
                 break;
             }
 
@@ -69,13 +70,13 @@ public class Main {
                 System.out.flush();
             }
         } catch (final Exception e) {
-            System.out.println("Failed to clear the console: " + e.getMessage());
+            System.out.print("Failed to clear the console: " + e.getMessage());
         }
     }
 
     private static void endGame() {
         clearConsole();
-        System.out.println(Strings.END_GAME_MESSAGE);
+        System.out.print(Strings.END_GAME_MESSAGE);
     }
 
     public static String getCurrentRoom() {
@@ -90,7 +91,15 @@ public class Main {
         return rooms;
     }
 
+    public static void setRooms(HashMap<String, Room> rooms) {
+        Main.rooms = rooms;
+    }
+
     public static void setGamePlay(boolean gamePlay) {
         Main.gamePlay = gamePlay;
+    }
+
+    public static boolean isGamePlay() {
+        return gamePlay;
     }
 }

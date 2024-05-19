@@ -18,7 +18,7 @@ public class Logic {
         if (enteredCommand != null) {
             switch (enteredCommand) {
                 case help:
-                    System.out.println(Strings.HELP_MESAGE);
+                    System.out.print(Strings.HELP_MESAGE);
                     break;
 
                 case goTo:
@@ -26,20 +26,20 @@ public class Logic {
                         String roomName = parts[1];
                         goToRoom(roomName);
                     } else {
-                        System.out.println(Strings.ERROR_COMMAND_MESSAGE);
+                        System.out.print(Strings.ERROR_COMMAND_MESSAGE);
                     }
                     break;
 
                 case whereAmI:
-                    System.out.println(Main.getRooms().get(Main.getCurrentRoom()).description());
+                    System.out.print(Main.getRooms().get(Main.getCurrentRoom()).description());
                     break;
 
                 case map:
-                    System.out.println(Strings.ASCII_MAP);
+                    System.out.print(Strings.ASCII_MAP);
                     break;
 
                 case search:
-                    System.out.println(Main.getCurrentRoom() + ": " + Main.getRooms().get(Main.getCurrentRoom()).items());
+                    System.out.print(Main.getCurrentRoom() + ": " + Main.getRooms().get(Main.getCurrentRoom()).items());
                     break;
 
                 case pick:
@@ -47,7 +47,7 @@ public class Logic {
                         String item = parts[1];
                         pickItem(item);
                     } else {
-                        System.out.println(Strings.ERROR_COMMAND_MESSAGE);
+                        System.out.print(Strings.ERROR_COMMAND_MESSAGE);
                     }
                     break;
 
@@ -56,19 +56,19 @@ public class Logic {
                         String item = parts[1];
                         dropItem(item);
                     } else {
-                        System.out.println(Strings.ERROR_COMMAND_MESSAGE);
+                        System.out.print(Strings.ERROR_COMMAND_MESSAGE);
                     }
                     break;
 
                 case inventory:
-                    System.out.println(Player.getInventory());
+                    System.out.print(Player.getInventory());
                     break;
 
                 case sudoWin:
                     Main.setGamePlay(false);
 
                 case startRocket:
-                    if (Objects.equals(Main.getCurrentRoom(), Rooms.LAUNCH_PAD.getRoom().name())) {
+                    if (Objects.equals(Main.getCurrentRoom(), Rooms.LAUNCH_PAD.name())) {
                         List<String> itemsToCheck = Arrays.asList("rocket_computer", "canister_with_fuel");
 
                         boolean allItemsPresent = true;
@@ -84,19 +84,19 @@ public class Logic {
                         if (allItemsPresent) {
                             Main.setGamePlay(false);
                         } else {
-                            System.out.println("You are missing " + missingItem + "!");
+                            System.out.print("You are missing " + missingItem + "!");
                         }
                     } else {
-                        System.out.println("Go to launch pad fist!");
+                        System.out.print("Go to launch pad fist!");
                     }
 
                     break;
 
                 default:
-                    System.out.println(Strings.ERROR_COMMAND_MESSAGE);
+                    System.out.print(Strings.ERROR_COMMAND_MESSAGE);
             }
         } else {
-            System.out.println(Strings.ERROR_COMMAND_MESSAGE);
+            System.out.print(Strings.ERROR_COMMAND_MESSAGE);
         }
     }
 
@@ -104,12 +104,12 @@ public class Logic {
         if (Main.getRooms().containsKey(roomName)) {
             if (!roomName.equals(Main.getCurrentRoom())) {
                 Main.setCurrentRoom(roomName);
-                System.out.println("You have entered the " + roomName + ".");
+                System.out.print("You have entered the " + roomName + ".");
             } else {
-                System.out.println("You are already in " + roomName + ".");
+                System.out.print("You are already in " + roomName + ".");
             }
         } else {
-            System.out.println("Invalid room name. Try again.");
+            System.out.print("Invalid room name. Try again.");
         }
     }
 
@@ -119,12 +119,12 @@ public class Logic {
             if (Player.getInventory().size() < Player.getInventorySize()) {
                 Player.getInventory().add(item);
                 currentRoom.removeItem(item);
-                System.out.println("Picked up " + item + ".");
+                System.out.print("Picked up " + item + ".");
             } else {
-                System.out.println("Inventory is full. Drop an item to pick up " + item + ".");
+                System.out.print("Inventory is full. Drop an item to pick up " + item + ".");
             }
         } else {
-            System.out.println("Item not found in the room.");
+            System.out.print("Item not found in the room.");
         }
     }
 
@@ -133,9 +133,9 @@ public class Logic {
         if (Player.getInventory().contains(item)) {
             Player.getInventory().remove(item);
             currentRoom.addItem(item);
-            System.out.println(item + " is dropped in to: " + currentRoom.name());
+            System.out.print(item + " is dropped in to: " + currentRoom.name());
         } else {
-            System.out.println("Item not found in the inventory.");
+            System.out.print("Item not found in the inventory.");
         }
     }
 }

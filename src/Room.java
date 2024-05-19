@@ -2,7 +2,7 @@ import java.util.*;
 
 public record Room(String name, String description, List<String> items) {
     public Room(String name, String description, List<String> items) {
-        this.name = name;
+        this.name = name.toLowerCase();
         this.description = description;
         this.items = new ArrayList<>(items);
     }
